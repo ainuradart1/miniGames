@@ -1,11 +1,29 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'math_quiz_screen.dart';
 import 'tap_game_screen.dart';
 import 'memory_game_screen.dart';
 import 'records_screen.dart';
+import 'guess_number_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void openRandomGame(BuildContext context) {
+    final games = [
+      const MathQuizScreen(),
+      const TapGameScreen(),
+      const MemoryGameScreen(),
+      const GuessNumberScreen(),
+    ];
+
+    final randomGame = games[Random().nextInt(games.length)];
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => randomGame),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +59,27 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white.withOpacity(0.6),
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
+
+                // Кнопка случайной игры
+                ElevatedButton.icon(
+                  onPressed: () => openRandomGame(context),
+                  icon: const Icon(Icons.casino),
+                  label: const Text("🎲 Случайная игра"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 1,
@@ -75,10 +113,21 @@ class HomeScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => const MemoryGameScreen()),
                         ),
                       ),
+                      _GameCard(
+                        title: '🎯 Угадай число',
+                        subtitle: 'Попробуй угадать число',
+                        color: const Color(0xFFFFA500),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const GuessNumberScreen()),
+                        ),
+                      ),
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 16),
+
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
@@ -110,6 +159,9 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// ---------------------
+// Виджет карточки игры
+// ---------------------
 class _GameCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -121,7 +173,8 @@ class _GameCard extends StatelessWidget {
     required this.subtitle,
     required this.color,
     required this.onTap,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,38 +182,37 @@ class _GameCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: color.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: color.withOpacity(0.5), width: 1.5),
+          color: color,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Row(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white.withOpacity(0.6),
-                    ),
-                  ),
-                ],
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: color, size: 20),
+            const SizedBox(height: 8),
+            Text(
+              subtitle,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.white70,
+              ),
+            ),
           ],
         ),
       ),
