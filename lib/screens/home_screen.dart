@@ -3,6 +3,7 @@ import 'math_quiz_screen.dart';
 import 'tap_game_screen.dart';
 import 'memory_game_screen.dart';
 import 'records_screen.dart';
+import 'competition_menu_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,23 +25,12 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                const Text(
-                  '🎮 Мини-Игры',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 2,
-                  ),
-                ),
+                const Text('🎮 Мини-Игры',
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold,
+                        color: Colors.white, letterSpacing: 2)),
                 const SizedBox(height: 8),
-                Text(
-                  'Выбери игру и побей рекорд!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withOpacity(0.6),
-                  ),
-                ),
+                Text('Выбери игру и побей рекорд!',
+                    style: TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.6))),
                 const SizedBox(height: 50),
                 Expanded(
                   child: GridView.count(
@@ -52,28 +42,29 @@ class HomeScreen extends StatelessWidget {
                         title: '🧮 Математическая викторина',
                         subtitle: 'Реши примеры быстрее времени',
                         color: const Color(0xFF6C63FF),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const MathQuizScreen()),
-                        ),
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const MathQuizScreen())),
                       ),
                       _GameCard(
                         title: '👆 Тап-игра',
                         subtitle: 'Нажимай как можно быстрее',
                         color: const Color(0xFFFF6584),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const TapGameScreen()),
-                        ),
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const TapGameScreen())),
                       ),
                       _GameCard(
                         title: '🃏 Игра на память',
                         subtitle: 'Найди одинаковые карточки',
                         color: const Color(0xFF43D9AD),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const MemoryGameScreen()),
-                        ),
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const MemoryGameScreen())),
+                      ),
+                      _GameCard(
+                        title: '⚔️ Соревнование',
+                        subtitle: 'Локально, онлайн или против ИИ',
+                        color: const Color(0xFFFFD700),
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const CompetitionMenuScreen())),
                       ),
                     ],
                   ),
@@ -82,21 +73,15 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const RecordsScreen()),
-                    ),
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const RecordsScreen())),
                     icon: const Icon(Icons.emoji_events, color: Colors.amber),
-                    label: const Text(
-                      'Таблица рекордов',
-                      style: TextStyle(color: Colors.amber, fontSize: 16),
-                    ),
+                    label: const Text('Таблица рекордов',
+                        style: TextStyle(color: Colors.amber, fontSize: 16)),
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.amber, width: 2),
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
                   ),
                 ),
@@ -141,22 +126,11 @@ class _GameCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+                  Text(title, style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
                   const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white.withOpacity(0.6),
-                    ),
-                  ),
+                  Text(subtitle, style: TextStyle(
+                      fontSize: 13, color: Colors.white.withOpacity(0.6))),
                 ],
               ),
             ),
